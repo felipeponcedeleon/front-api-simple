@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from 'react';
+
+//Routing
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+/* Componentes Layout*/
+import Header from './componentes/layout/Header';
+import Navegacion from './componentes/layout/Navegacion';
+
+/* Componentes App */
+import Clientes from './componentes/Clientes';
+import Productos from './componentes/Productos';
+import Pedidos from './componentes/Pedidos';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return(
+      <Router>
+        <Fragment>
+          <Header />
+          <div className="grid contenedor contenido-principal">
+            <Navegacion />
+            <main className="caja-contenido col-9">
+              <Switch>
+
+                <Route exact path="/" component={Clientes} />
+
+                <Route exact path="/productos" component={Productos} />
+
+                <Route exact path="/pedidos" component={Pedidos} />
+              
+              </Switch>
+            </main>
+          </div>
+        </Fragment>
+      </Router>
+    );
 }
 
 export default App;
