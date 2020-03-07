@@ -2,6 +2,9 @@
 //componentDidMount() y componentWillMount()
 import React, { useEffect, useState, Fragment } from 'react';
 
+//Link
+import { Link } from 'react-router-dom';
+
 //import cliente axios
 import clienteAxios from '../config/axios';
 
@@ -28,12 +31,19 @@ function Clientes() {
     //equivalente a componentDidMount() y componentWillMount()
     useEffect(() => {
         consultarAPI();
-    }, []);
+    }, [clientes]);
     //arreglo vacío para ejecutarse solo una vez
+    //si se le pasa el state (cliente) entonces
+    //se va a volver a llamar si encuentra alguna modificación
 
     return(
         <Fragment>
             <h2>Clientes</h2>
+
+            <Link to={"/clientes/nuevo"} className="btn btn-verde nvo-cliente"> 
+                <i className="fas fa-plus-circle"></i>
+                Nuevo Cliente
+            </Link>
 
             <ul className="listado-clientes">
                 {clientes.map(cliente => (
