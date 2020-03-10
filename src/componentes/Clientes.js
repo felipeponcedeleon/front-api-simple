@@ -11,6 +11,8 @@ import clienteAxios from '../config/axios';
 //Componentes
 import Cliente from './Cliente';
 
+import Spinner from './layout/Spinner'; 
+
 function Clientes() {
 
     //State
@@ -35,6 +37,9 @@ function Clientes() {
     //arreglo vacío para ejecutarse solo una vez
     //si se le pasa el state (cliente) entonces
     //se va a volver a llamar si encuentra alguna modificación
+
+    //Spinner
+    if(!clientes.length) return <Spinner />
 
     return(
         <Fragment>

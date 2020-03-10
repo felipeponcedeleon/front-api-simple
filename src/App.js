@@ -11,8 +11,15 @@ import Navegacion from './componentes/layout/Navegacion';
 import Clientes from './componentes/Clientes';
 import NuevoCliente from './componentes/NuevoCliente';
 import EditarCliente from './componentes/EditarCliente';
+
+//Productos
 import Productos from './componentes/Productos';
+import NuevoProducto from './componentes/NuevoProducto';
+import EditarProducto from './componentes/EditarProducto';
+
+//Pedidos
 import Pedidos from './componentes/Pedidos';
+
 
 function App() {
   return(
@@ -31,6 +38,8 @@ function App() {
                 <Route exact path="/clientes/editar/:id" component={EditarCliente} />
 
                 <Route exact path="/productos" component={Productos} />
+                <Route exact path="/productos/nuevo" component={NuevoProducto} />
+                <Route exact path="/productos/editar/:id" component={EditarProducto} />
 
                 <Route exact path="/pedidos" component={Pedidos} />
               
