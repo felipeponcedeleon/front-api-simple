@@ -4,11 +4,14 @@ import clienteAxios from '../config/axios';
 
 import FormBuscarProducto from './FormBuscarProducto';
 
+import Swal from 'sweetalert2';
+
 function NuevoPedido(props) {
 
     const { id } = props.match.params;
 
     const [cliente, guardarCliente] = useState({});
+    const [busqueda, guardarBusqueda] = useState('');
 
     useEffect(() => {
         const consultarAPI = async () => {
@@ -20,12 +23,25 @@ function NuevoPedido(props) {
 
     const { nombre, apellido, telefono } = cliente;
 
-    const buscarProducto = () => {
+    const buscarProducto = async(e) => {
+        e.preventDefault();
+       
+        const resultadoBusqueda = await clienteAxios.post(`/productos/busqueda/${busqueda}`);
+    
+        if(resultadoBusqueda.data[0]) {
+
+        } else {
+            Swal.fire({
+                type: 'error',
+                title: 'Resultados',
+                text: 'No se encontraron resultados.'
+            })
+        }
 
     }
 
-    const leerDatosBusqueda = () => {
-
+    const leerDatosBusqueda = (e) => {
+        guardarBusqueda(e.target.value);
     }
 
     return(
@@ -43,7 +59,7 @@ function NuevoPedido(props) {
                 leerDatosBusqueda={leerDatosBusqueda}
             />
 
-            <ul class="resumen">
+            <ul className="resumen">
                 <li>
                     <div className="texto-producto">
                         <p className="nombre"></p>
