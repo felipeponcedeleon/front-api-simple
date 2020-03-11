@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import clienteAxios from '../config/axios';
 
@@ -77,6 +78,14 @@ function NuevoPedido(props) {
         guardarProductos(sumarCantidad);
     }
 
+
+    const eliminarProductoPedido = (id) => {
+        const todosLosProductos = productos.filter(producto => producto.producto !==id);
+        guardarProductos(todosLosProductos);
+    }
+
+
+
     const actualizarTotal = () => {
         if(productos.length === 0){
             guardarTotal(0);
@@ -91,7 +100,37 @@ function NuevoPedido(props) {
 
     }
 
+    const realizarPedido = async (e) => {
+        e.preventDefault();
 
+        const { id } = props.match.params;
+
+        const pedido = {
+            "cliente": id,
+            "pedido": productos,
+            "total": total
+        }
+
+        //console.log(pedido);
+        const resultado = await clienteAxios.post(`/pedidos/nuevo/${id}`, pedido);
+        
+        if(resultado.status === 200) {
+            Swal.fire({
+                type: 'success',
+                title: 'Correcto',
+                text: resultado.data.mensaje
+            })
+        } else {
+            Swal.fire({
+                type: 'error',
+                title: 'Ocurrió un error',
+                text: 'Vuelva a intentar mas tarde.'
+            })
+        }
+
+        props.history.push('/pedidos');
+
+    }
 
     return(
         <Fragment>
@@ -116,13 +155,14 @@ function NuevoPedido(props) {
                         restarProductos={restarProductos}
                         sumarProductos={sumarProductos}
                         index={index}
+                        eliminarProductoPedido={eliminarProductoPedido}
                     />
                 ))}
             </ul>
 
             <p className="total">Total a Pagar: <span>$ {total}</span> </p>
             { total > 0 ? (
-                <form>
+                <form onSubmit={realizarPedido}>
                     <input type="submit"
                         className="btn btn-verde btn-block"
                         value="Realizar Pedido"
@@ -134,4 +174,4 @@ function NuevoPedido(props) {
     )
 }
 
-export default NuevoPedido;
+export default withRouter(NuevoPedido);

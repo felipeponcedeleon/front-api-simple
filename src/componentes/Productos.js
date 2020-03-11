@@ -13,21 +13,18 @@ function Productos() {
     //productos = state, guardarProductos = setState
     const [productos, guardarProductos] = useState([]);
 
-    const consultarApi = async() => {
-       const productosConsulta = await clienteAxios.get('/productos')
-       guardarProductos(productosConsulta.data);
-    }
-
     useEffect(() => {
 
+        const consultarApi = async() => {
+            const productosConsulta = await clienteAxios.get('/productos');
+            guardarProductos(productosConsulta.data);
+        }
         consultarApi();
 
     }, [productos]);
 
-
     //Spinner de carga
     if(!productos.length) return <Spinner />
-
 
     return(
         <Fragment>
